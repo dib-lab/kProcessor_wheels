@@ -54,7 +54,8 @@ function pre_build {
     yum install bzip2 -y
     # yum install cmake -y
     # yum info cmake
-    pip install cmak
+    pip install --upgrade pip
+    pip install cmake
     echo $(yum info cmake)
     yum install make -y
     echo $(python --version)
