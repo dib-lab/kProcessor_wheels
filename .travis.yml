@@ -101,8 +101,8 @@ before_install:
     # - ./miniconda3.sh -b
     # - export PATH=/home/travis/miniconda3/bin:$PATH
     # - conda update --yes conda
-    - pip install --upgrade pip
-    - pip install cmake
+    - sudo python -m pip install --upgrade pip
+    - sudo python -m pip install cmake
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
