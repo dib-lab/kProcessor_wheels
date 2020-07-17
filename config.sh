@@ -52,8 +52,11 @@ function pre_build {
     # conda -V
 
     yum install bzip2 -y
-    yum install cmake3 -y
+    yum install cmake -y
+    yum info cmake
+    echo $(yum info cmake)
     yum install make -y
+    echo $(python --version)
     
     build_swig
 
@@ -61,7 +64,7 @@ function pre_build {
     rm -rf build
     mkdir build
     cd build
-    cmake3 ..
+    cmake ..
     make
     cd ..
     # python setup.py bdist_wheel
