@@ -1,0 +1,143 @@
+env:
+  global:
+        - CI_NODE_TOTAL=1
+        - REPO_DIR=hello_swig
+        - TRAVIS_DEBUG_MODE=true
+        # Commit from your-project that you want to build
+        - BUILD_COMMIT=master
+        # pip dependencies to _build_ your project
+        - BUILD_DEPENDS=""
+        # pip dependencies to _test_ your project.  Include any dependencies
+        # that you need, that are also specified in BUILD_DEPENDS, this will be
+        # a separate install.
+        - TEST_DEPENDS="pytest"
+        - PLAT=x86_64
+        - UNICODE_WIDTH=32
+        # BINTRAY_API_KEY
+        # - secure: "U6ihXmjRVmJkmOfNagKxG8W3VcERrBl65e9GxvzEx8BoU/ifrRCQEc7CZMliMBVWUXTSZUe3jEuGl0voqi59/0yQgY2pf/AH0AAKUvuTvJ/9qiTyLKuii8K4mM/0SafJPHwSho6W9EoKpzvMNKCSEGGsD7ogF5jEthzIFWqOUnoUeK9hOdrzwz33Xl1xvQNF/mpCmehHc4DIu2zsW3pyftetJ86cVzGA5RgsnwPBh/lrD8qSX8rjJjS83itzQjkAGx5O9M1ouNWwctrQmLJE+fzHwNiH2o7XG8ZlvKQY1uvFS+UpLmAuZaoQlJqiBnT2iL19qUrx+Cqq179kHRsEQUssnpXmtadcAj145uHi2DcDD22HVSzYXge91g4475KZRqbvuP1/WnrnBUxJY/fW4zmqi/a5FfPwT2t2QF2WqNQilZ5fgiq9vx/ekjGL1oJ7sM6GE8HRud9LUo7zx1YjgY4C8nzibJxpISYdEEC9u09Y8H4vIqn7+BQ5M4gnUOO9ADDZ9+SqoD/tJAN+V5vrU2VmAyYlpeuJ92zf7FwwAE4RowmjCeJleuH88tySA4fpDExcE3ym6kFZ649PezrfAlVMhWzPU0RGJj1NtmjDEHn3qWmVmSk4VHZf595HZlyemLEDCQnpxTRdgTACWAFYzGQE3dkiT7LDMBPD2f7yskk="
+        - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
+        # Following generated with
+        # travis encrypt -r your-org/your-project-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
+        # This is for Rackspace uploads.  Contact Matthew Brett, or the
+        # scikit-learn team, for # permission (and the API key) to upload to
+        # the Rackspace account used here, or use your own account.
+        # - secure: "MNKyBWOzu7JAUmC0Y+JhPKfytXxY/ADRmUIMEWZV977FLZPgYctqd+lqel2QIFgdHDO1CIdTSymOOFZckM9ICUXg9Ta+8oBjSvAVWO1ahDcToRM2DLq66fKg+NKimd2OfK7x597h/QmUSl4k8XyvyyXgl5jOiLg/EJxNE2r83IA="
+
+language:        cpp
+# The travis Python version is unrelated to the version we build and test
+# with.  This is set with the MB_PYTHON_VERSION variable.
+python:          3.6
+sudo:            required
+dist:            trusty
+services:        docker
+
+matrix:
+  include:
+    # Linux
+    - os: linux
+      sudo: required
+      compiler: 
+        - gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-7
+            - g++-7
+            - cmake
+            - make
+            - automake
+      env:
+        - MB_PYTHON_VERSION=3.6
+    
+    # - os:        linux
+    #   sudo: required
+    #   env:
+    #     - MB_PYTHON_VERSION=3.5
+    #     - PLAT=i686
+
+    # - os:        linux
+    #   sudo: required
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    
+    # - os:        linux
+    #   sudo: required
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - PLAT=i686
+    
+    # - os:        linux
+    #   sudo: required
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+    
+    # - os:        linux
+    #   sudo: required
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+    #     - PLAT=i686
+    
+    # # OSX
+    # - os:        osx
+    #   sudo: required
+    #   language:  generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+  
+    # - os:        osx
+    #   sudo: required
+    #   language:  generic
+    #   env:
+    #     - MB_PYTHON_VERSION=3.7
+
+before_install:
+    # - g++ --version
+    # - which g++ 
+    # - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda3.sh;
+    # - chmod +x miniconda3.sh
+    # - ./miniconda3.sh -b
+    # - export PATH=/home/travis/miniconda3/bin:$PATH
+    # - conda update --yes conda
+    - source multibuild/common_utils.sh
+    - source multibuild/travis_steps.sh
+    - before_install
+
+install:
+    # Maybe get and clean and patch source
+    # - export PATH=/home/travis/miniconda3/bin:$PATH
+    # - conda create --yes -n test python=$MB_PYTHON_VERSION
+    # - source activate test
+    # - conda install --yes cmake make
+    # - conda install -c anaconda gcc -y
+    # - conda install -c anaconda libstdcxx-ng -y
+    # - conda install --yes -c conda-forge swig=4.0.1
+    # - BACK=$(pwd)
+    # - pwd
+    # - g++ --version
+    # - which g++
+    # - cd $REPO_DIR
+    # - mkdir build && cd build && cmake ..
+    # - make
+    # - cd ${BACK}
+    - clean_code $REPO_DIR $BUILD_COMMIT
+    - build_wheel $REPO_DIR $PLAT
+
+script:
+    - install_run $PLAT
+
+
+# after_success:
+#     # Upload to bintray
+#     - for f in ${TRAVIS_BUILD_DIR}/wheelhouse/osqp*; do echo "Uploading $f"; curl -T $f -ubstellato:$BINTRAY_API_KEY -H "X-Bintray-Package:osqp-wheels" -H "X-Bintray-Version:${BUILD_COMMIT}" -H "X-Bintray-Override:1" https://api.bintray.com/content/bstellato/generic/osqp-wheels/${BUILD_COMMIT}/; done
+#      # Publish
+#     - curl -X POST -ubstellato:$BINTRAY_API_KEY https://api.bintray.com/content/bstellato/generic/osqp-wheels/${BUILD_COMMIT}/publish
+
+
+after_success:
+    # Upload to bintray
+    - for wheel_file in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T ${wheel_file} -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/; done
+    # - for f in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T $f -umr-eyes:$BINTRAY_API_KEY -H "X-Bintray-Package:helloSwig_wheels" -H "X-Bintray-Version:${BUILD_COMMIT}" -H "X-Bintray-Override:1" https://api.bintray.com/content/mr-eyes/helloSwig_wheels/helloSwig/${BUILD_COMMIT}/; done
+     # Publish
+    - curl -X POST -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/publish
