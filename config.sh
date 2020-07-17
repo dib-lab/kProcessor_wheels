@@ -52,8 +52,9 @@ function pre_build {
     # conda -V
 
     yum install bzip2 -y
-    yum install cmake -y
-    yum info cmake
+    # yum install cmake -y
+    # yum info cmake
+    pip install cmak
     echo $(yum info cmake)
     yum install make -y
     echo $(python --version)
