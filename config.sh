@@ -61,7 +61,7 @@ function pre_build {
     rm -rf build
     mkdir build
     cd build
-    cmake ..
+    cmake3 ..
     make
     cd ..
     # python setup.py bdist_wheel
