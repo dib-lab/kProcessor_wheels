@@ -43,11 +43,19 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - gcc-7
             - g++-7
+            - zlib1g-dev
+            - libbz2-dev
+            - libboost-dev
             - cmake
+            - cmake-data
             - make
             - automake
+            - python
+            - python-nose
+            - python-jinja2
+            - python-pip
+
       env:
         - MB_PYTHON_VERSION=3.6
         - MB_PYTHON_VER=3.6
@@ -101,6 +109,7 @@ before_install:
     # - ./miniconda3.sh -b
     # - export PATH=/home/travis/miniconda3/bin:$PATH
     # - conda update --yes conda
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
     - sudo python -m pip install --upgrade pip
     - sudo python -m pip install cmake
     - source multibuild/common_utils.sh
