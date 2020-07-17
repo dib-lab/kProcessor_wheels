@@ -52,7 +52,7 @@ function pre_build {
     # conda -V
 
     yum install bzip2 -y
-    yum install cmake -y
+    yum install cmake3 -y
     yum install make -y
     
     build_swig
