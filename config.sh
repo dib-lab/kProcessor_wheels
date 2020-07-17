@@ -59,6 +59,11 @@ function pre_build {
     yum install zlib-devel -y
     yum install centos-release-scl-rh -y
     yum install devtoolset-7-toolchain -y
+    yum install centos-release-scl -y
+    yum install devtoolset-7-gcc* -y
+    scl enable devtoolset-7 bash
+    which gcc
+    gcc --version
     echo $(yum info cmake)
     yum install make -y
     echo $(python --version)
