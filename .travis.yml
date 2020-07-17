@@ -51,10 +51,6 @@ matrix:
             - cmake-data
             - make
             - automake
-            - python
-            - python-nose
-            - python-jinja2
-            - python-pip
 
       env:
         - MB_PYTHON_VERSION=3.6
