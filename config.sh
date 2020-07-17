@@ -56,9 +56,9 @@ function pre_build {
     # yum info cmake
     pip install --upgrade pip
     pip install cmake
-    yum install zlib-devel
-    yum install centos-release-scl-rh
-    yum install devtoolset-7-toolchain
+    yum install zlib-devel -y
+    yum install centos-release-scl-rh -y
+    yum install devtoolset-7-toolchain -y
     echo $(yum info cmake)
     yum install make -y
     echo $(python --version)
