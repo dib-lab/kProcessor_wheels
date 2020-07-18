@@ -2,14 +2,14 @@
     "package": {
         "name": "kProcessor",
         "repo": "wheels",
-        "subject": "kProcessor"
+        "subject": "mr-eyes"
     },
     "version": {
         "name": "0.9"
     },
     "files": [
         {
-            "includePattern": "/home/travis/wheelhouse/(.*\\.whl)",
+            "includePattern": "wheelhouse/(.*\\.whl)",
             "uploadPattern": "wheels/$1",
             "matrixParams": {
                 "override": 1 

@@ -158,8 +158,9 @@ after_success:
 deploy:
   provider: bintray
   file: "descriptor.json"
-  user: mr-eyes
-  key: $BINTRAY_API_KEY
+  user: "mr-eyes"
+  key: "$BINTRAY_API_KEY"
+  skip_cleanup: true
 
 # after_success:
 #     # Upload to bintray
