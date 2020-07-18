@@ -9,7 +9,7 @@
     },
     "files": [
         {
-            "includePattern": "wheelhouse/(.*\\.whl)",
+            "includePattern": "/home/travis/wheelhouse/(.*\\.whl)",
             "uploadPattern": "wheels/$1",
             "matrixParams": {
                 "override": 1 
