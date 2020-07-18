@@ -98,9 +98,9 @@ matrix:
         - MB_ML_VER=2014
 
 before_install:
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
-    - sudo python -m pip install --upgrade pip
-    - sudo python -m pip install cmake
+    # - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+    # - sudo python -m pip install --upgrade pip
+    # - sudo python -m pip install cmake
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
