@@ -60,6 +60,7 @@ function pre_build {
     yum install centos-release-scl-rh -y
     yum install devtoolset-7-toolchain -y
     yum groupinstall -y "development tools"
+    yum install boost-devel -y
     yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel expat-devel
     which gcc
     echo $(yum info cmake)
