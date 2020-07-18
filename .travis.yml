@@ -34,78 +34,70 @@ services:        docker
 matrix:
   include:
     # Linux
+    # - os: linux
+    #   sudo: required
+    #   compiler: 
+    #     - gcc
+    #   addons:
+    #     apt:
+    #       sources:
+    #         - ubuntu-toolchain-r-test
+    #       packages:
+    #         - g++-7
+    #         - zlib1g-dev
+    #         - libbz2-dev
+    #         - libboost-dev
+    #         - cmake
+    #         - cmake-data
+    #         - make
+    #         - automake
+
+    #   env:
+    #     - MB_PYTHON_VERSION=3.6
+    #     - MB_ML_VER=2014
+    
     - os: linux
       sudo: required
-      compiler: 
-        - gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-7
-            - zlib1g-dev
-            - libbz2-dev
-            - libboost-dev
-            - cmake
-            - cmake-data
-            - make
-            - automake
-
       env:
         - MB_PYTHON_VERSION=3.6
         - MB_ML_VER=2014
-        - MB_PYTHON_VER=3.6
-    
-    # - os:        linux
-    #   sudo: required
-    #   env:
-    #     - MB_PYTHON_VERSION=3.5
-    #     - PLAT=i686
 
-    # - os:        linux
-    #   sudo: required
-    #   env:
-    #     - MB_PYTHON_VERSION=3.6
+    - os: linux
+      sudo: required
+      env:
+        - MB_PYTHON_VERSION=3.7
+        - MB_ML_VER=2014
     
-    # - os:        linux
-    #   sudo: required
-    #   env:
-    #     - MB_PYTHON_VERSION=3.6
-    #     - PLAT=i686
+    - os: linux
+      sudo: required
+      env:
+        - MB_PYTHON_VERSION=3.8
+        - MB_ML_VER=2014
     
-    # - os:        linux
-    #   sudo: required
-    #   env:
-    #     - MB_PYTHON_VERSION=3.7
-    
-    # - os:        linux
-    #   sudo: required
-    #   env:
-    #     - MB_PYTHON_VERSION=3.7
-    #     - PLAT=i686
-    
-    # # OSX
-    # - os:        osx
-    #   sudo: required
-    #   language:  generic
-    #   env:
-    #     - MB_PYTHON_VERSION=3.6
+    # OSX
+    - os: osx
+      sudo: required
+      language:  generic
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - MB_ML_VER=2014
+        
   
-    # - os:        osx
-    #   sudo: required
-    #   language:  generic
-    #   env:
-    #     - MB_PYTHON_VERSION=3.7
+    - os: osx
+      sudo: required
+      language:  generic
+      env:
+        - MB_PYTHON_VERSION=3.7
+        - MB_ML_VER=2014
+
+    - os: osx
+      sudo: required
+      language:  generic
+      env:
+        - MB_PYTHON_VERSION=3.8
+        - MB_ML_VER=2014
 
 before_install:
-    # - g++ --version
-    # - which g++ 
-    # - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda3.sh;
-    # - chmod +x miniconda3.sh
-    # - ./miniconda3.sh -b
-    # - export PATH=/home/travis/miniconda3/bin:$PATH
-    # - conda update --yes conda
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
     - sudo python -m pip install --upgrade pip
     - sudo python -m pip install cmake
@@ -114,43 +106,11 @@ before_install:
     - before_install
 
 install:
-    # - |
-    #   if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
-    #     CMAKE_URL="http://www.cmake.org/files/v3.5/cmake-3.5.1-Linux-x86_64.tar.gz"
-    #     mkdir -p ${DEPS_DIR}/cmake
-    #     travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
-    #     export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-    #   fi
-    # Maybe get and clean and patch source
-    # - export PATH=/home/travis/miniconda3/bin:$PATH
-    # - conda create --yes -n test python=$MB_PYTHON_VERSION
-    # - source activate test
-    # - conda install --yes cmake make
-    # - conda install -c anaconda gcc -y
-    # - conda install -c anaconda libstdcxx-ng -y
-    # - conda install --yes -c conda-forge swig=4.0.1
-    # - BACK=$(pwd)
-    # - pwd
-    # - g++ --version
-    # - which g++
-    # - cd $REPO_DIR
-    # - mkdir build && cd build && cmake ..
-    # - make
-    # - cd ${BACK}
     - clean_code $REPO_DIR $BUILD_COMMIT
     - build_wheel $REPO_DIR $PLAT
 
 script:
     - install_run $PLAT
-
-
-# after_success:
-#     # Upload to bintray
-#     - for f in ${TRAVIS_BUILD_DIR}/wheelhouse/osqp*; do echo "Uploading $f"; curl -T $f -ubstellato:$BINTRAY_API_KEY -H "X-Bintray-Package:osqp-wheels" -H "X-Bintray-Version:${BUILD_COMMIT}" -H "X-Bintray-Override:1" https://api.bintray.com/content/bstellato/generic/osqp-wheels/${BUILD_COMMIT}/; done
-#      # Publish
-#     - curl -X POST -ubstellato:$BINTRAY_API_KEY https://api.bintray.com/content/bstellato/generic/osqp-wheels/${BUILD_COMMIT}/publish
-
-
 
 after_success:
   - echo "Sending wheels .."
@@ -161,10 +121,3 @@ deploy:
   user: "mr-eyes"
   key: "$BINTRAY_API_KEY"
   skip_cleanup: true
-
-# after_success:
-#     # Upload to bintray
-#     - for wheel_file in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T ${wheel_file} -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/; done
-#     # - for f in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T $f -umr-eyes:$BINTRAY_API_KEY -H "X-Bintray-Package:helloSwig_wheels" -H "X-Bintray-Version:${BUILD_COMMIT}" -H "X-Bintray-Override:1" https://api.bintray.com/content/mr-eyes/helloSwig_wheels/helloSwig/${BUILD_COMMIT}/; done
-#      # Publish
-#     - curl -X POST -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/publish
