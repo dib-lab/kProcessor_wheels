@@ -54,6 +54,7 @@ matrix:
 
       env:
         - MB_PYTHON_VERSION=3.6
+        - MB_ML_VER=2014
         - MB_PYTHON_VER=3.6
     
     # - os:        linux
