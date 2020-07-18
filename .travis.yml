@@ -151,9 +151,19 @@ script:
 #     - curl -X POST -ubstellato:$BINTRAY_API_KEY https://api.bintray.com/content/bstellato/generic/osqp-wheels/${BUILD_COMMIT}/publish
 
 
+
 after_success:
-    # Upload to bintray
-    - for wheel_file in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T ${wheel_file} -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/; done
-    # - for f in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T $f -umr-eyes:$BINTRAY_API_KEY -H "X-Bintray-Package:helloSwig_wheels" -H "X-Bintray-Version:${BUILD_COMMIT}" -H "X-Bintray-Override:1" https://api.bintray.com/content/mr-eyes/helloSwig_wheels/helloSwig/${BUILD_COMMIT}/; done
-     # Publish
-    - curl -X POST -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/publish
+  - echo "Sending wheels .."
+
+deploy:
+  provider: bintray
+  file: "descriptor.json"
+  user: mr-eyes
+  key: $BINTRAY_API_KEY
+
+# after_success:
+#     # Upload to bintray
+#     - for wheel_file in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T ${wheel_file} -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/; done
+#     # - for f in ${TRAVIS_BUILD_DIR}/wheelhouse/kProcessor*; do echo "Uploading $f"; curl -T $f -umr-eyes:$BINTRAY_API_KEY -H "X-Bintray-Package:helloSwig_wheels" -H "X-Bintray-Version:${BUILD_COMMIT}" -H "X-Bintray-Override:1" https://api.bintray.com/content/mr-eyes/helloSwig_wheels/helloSwig/${BUILD_COMMIT}/; done
+#      # Publish
+#     - curl -X POST -umr-eyes:$BINTRAY_API_KEY https://api.bintray.com/content/mr-eyes/wheels/kProcessor/${BUILD_COMMIT}/publish

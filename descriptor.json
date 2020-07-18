@@ -1,0 +1,20 @@
+{
+    "package": {
+        "name": "kProcessor",
+        "repo": "wheels",
+        "subject": "kProcessor"
+    },
+    "version": {
+        "name": "0.9"
+    },
+    "files": [
+        {
+            "includePattern": "wheelhouse/(.*\\.whl)",
+            "uploadPattern": "wheels/$1",
+            "matrixParams": {
+                "override": 1 
+            }
+        }
+    ],
+    "publish": true
+}
