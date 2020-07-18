@@ -3,26 +3,12 @@ env:
         - CI_NODE_TOTAL=1
         - REPO_DIR=kProcessor
         - TRAVIS_DEBUG_MODE=true
-        # Commit from your-project that you want to build
         - BUILD_COMMIT=beta_v1
-        # pip dependencies to _build_ your project
         - BUILD_DEPENDS=""
-        # pip dependencies to _test_ your project.  Include any dependencies
-        # that you need, that are also specified in BUILD_DEPENDS, this will be
-        # a separate install.
         - TEST_DEPENDS="pytest"
         - PLAT=x86_64
         - UNICODE_WIDTH=32
-        # BINTRAY_API_KEY
-        # - secure: "U6ihXmjRVmJkmOfNagKxG8W3VcERrBl65e9GxvzEx8BoU/ifrRCQEc7CZMliMBVWUXTSZUe3jEuGl0voqi59/0yQgY2pf/AH0AAKUvuTvJ/9qiTyLKuii8K4mM/0SafJPHwSho6W9EoKpzvMNKCSEGGsD7ogF5jEthzIFWqOUnoUeK9hOdrzwz33Xl1xvQNF/mpCmehHc4DIu2zsW3pyftetJ86cVzGA5RgsnwPBh/lrD8qSX8rjJjS83itzQjkAGx5O9M1ouNWwctrQmLJE+fzHwNiH2o7XG8ZlvKQY1uvFS+UpLmAuZaoQlJqiBnT2iL19qUrx+Cqq179kHRsEQUssnpXmtadcAj145uHi2DcDD22HVSzYXge91g4475KZRqbvuP1/WnrnBUxJY/fW4zmqi/a5FfPwT2t2QF2WqNQilZ5fgiq9vx/ekjGL1oJ7sM6GE8HRud9LUo7zx1YjgY4C8nzibJxpISYdEEC9u09Y8H4vIqn7+BQ5M4gnUOO9ADDZ9+SqoD/tJAN+V5vrU2VmAyYlpeuJ92zf7FwwAE4RowmjCeJleuH88tySA4fpDExcE3ym6kFZ649PezrfAlVMhWzPU0RGJj1NtmjDEHn3qWmVmSk4VHZf595HZlyemLEDCQnpxTRdgTACWAFYzGQE3dkiT7LDMBPD2f7yskk="
         - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
-        # Following generated with
-        # travis encrypt -r your-org/your-project-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
-        # This is for Rackspace uploads.  Contact Matthew Brett, or the
-        # scikit-learn team, for # permission (and the API key) to upload to
-        # the Rackspace account used here, or use your own account.
-        # - secure: "MNKyBWOzu7JAUmC0Y+JhPKfytXxY/ADRmUIMEWZV977FLZPgYctqd+lqel2QIFgdHDO1CIdTSymOOFZckM9ICUXg9Ta+8oBjSvAVWO1ahDcToRM2DLq66fKg+NKimd2OfK7x597h/QmUSl4k8XyvyyXgl5jOiLg/EJxNE2r83IA="
-
 language:        cpp
 # The travis Python version is unrelated to the version we build and test
 # with.  This is set with the MB_PYTHON_VERSION variable.
@@ -33,29 +19,6 @@ services:        docker
 
 matrix:
   include:
-    # Linux
-    # - os: linux
-    #   sudo: required
-    #   compiler: 
-    #     - gcc
-    #   addons:
-    #     apt:
-    #       sources:
-    #         - ubuntu-toolchain-r-test
-    #       packages:
-    #         - g++-7
-    #         - zlib1g-dev
-    #         - libbz2-dev
-    #         - libboost-dev
-    #         - cmake
-    #         - cmake-data
-    #         - make
-    #         - automake
-
-    #   env:
-    #     - MB_PYTHON_VERSION=3.6
-    #     - MB_ML_VER=2014
-    
     - os: linux
       sudo: required
       env:
@@ -73,34 +36,9 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.8
         - MB_ML_VER=2014
-    
-    # OSX
-    - os: osx
-      sudo: required
-      language:  generic
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - MB_ML_VER=2014
-        
-  
-    - os: osx
-      sudo: required
-      language:  generic
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - MB_ML_VER=2014
 
-    - os: osx
-      sudo: required
-      language:  generic
-      env:
-        - MB_PYTHON_VERSION=3.8
-        - MB_ML_VER=2014
 
 before_install:
-    # - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
-    # - sudo python -m pip install --upgrade pip
-    # - sudo python -m pip install cmake
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install

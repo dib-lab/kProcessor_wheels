@@ -52,8 +52,6 @@ function pre_build {
     # conda -V
 
     yum install bzip2 -y
-    # yum install cmake -y
-    # yum info cmake
     pip install --upgrade pip
     pip install cmake
     yum install zlib-devel -y
@@ -76,29 +74,12 @@ function pre_build {
     cmake ..
     make
     cd ..
-    # python setup.py bdist_wheel
     cd ..
 }
 
-# function pip_opts {
-#     # Extra options for pip
-#     # echo "--only-binary matplotlib --find-links ${MANYLINUX_URL}"
-# }
 
 function run_tests {
-    # echo "tests"
-    # # Runs tests on installed distribution from an empty directory
-    # ASTROPY_INSTALL_DIR=$(dirname $(python -c 'import astropy; print(astropy.__file__)'))
-
-    # # Patch the test_roundtrip_sky_rotation test which is affected by angle
-    # # wrapping on 32-bit platforms. This should be fixed in astropy v4.0 with
-    # # https://github.com/astropy/astropy/pull/9496
-    # local patch_file=$(abspath ../patches/test_roundtrip_sky_rotation.patch)
-    # (cd $ASTROPY_INSTALL_DIR && patch -p0 < $patch_file)
-
-    # # Runs tests on installed distribution from an empty directory
     python --version
-    # python -c "import sys; import swigHello; sys.exit(astropy.test(remote_data='none'))"
     pwd
     ls
 }
