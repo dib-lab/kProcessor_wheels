@@ -3,7 +3,7 @@ env:
         - CI_NODE_TOTAL=1
         - REPO_DIR=kProcessor
         - TRAVIS_DEBUG_MODE=true
-        - BUILD_COMMIT=beta_v1
+        - BUILD_COMMIT=master
         - BUILD_DEPENDS=""
         - TEST_DEPENDS="pytest"
         - PLAT=x86_64
